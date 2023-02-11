@@ -1,6 +1,6 @@
-dwm - dynamic window manager
+Custom build of dwm v6.4
 ============================
-dwm is an extremely fast, small, and dynamic window manager for X.
+WIP
 
 
 Requirements
