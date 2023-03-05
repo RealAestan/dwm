@@ -1,5 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
+/* constants */
+#define TERMINAL "st"
+#define BROWSER "surf"
+
 /* appearance */
 static unsigned int borderpx  = 1;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
@@ -59,7 +63,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-c", "-l", "20", "-bw", "2", "-m", dmenumon, NULL };
 static const char *passmenucmd[] = { "passmenu", "--type", "-c", "-l", "20", "-bw", "2", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -84,6 +88,10 @@ ResourcePref resources[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,			XK_f,      spawn,          {.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
+	{ MODKEY,			XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY|ShiftMask,		XK_w,	   spawn,          {.v = (const char*[]){ TERMINAL, "-e", "sudo", "nmtui", NULL } } },
+	{ MODKEY,			XK_m, 	   spawn,	   SHCMD(TERMINAL " -e neomutt") },
 	{ MODKEY|ShiftMask,		XK_grave,  spawn,	   {.v = (const char*[]){ "dmenuunicode", NULL } } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = passmenucmd } },
@@ -91,6 +99,14 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_q,	   spawn,	   {.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   {.v = (const char*[]){ "mounter", NULL } } },
 	{ MODKEY|ShiftMask,		XK_u,	   spawn,	   {.v = (const char*[]){ "unmounter", NULL } } },
+	{ MODKEY|ShiftMask,		XK_s,	   spawn,	   {.v = (const char*[]){ "maimpick", NULL } } },
+	{ MODKEY|ShiftMask,		XK_r,	   spawn,	   {.v = (const char*[]){ "dmenurecord", NULL } } },
+	{ MODKEY|ShiftMask,		XK_o,	   spawn,	   {.v = (const char*[]){ "otp", NULL } } },
+	{ 0, 				XK_F1,	   spawn,	   {.v = (const char*[]){ "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL } } },
+	{ 0, 				XK_F2,	   spawn,	   {.v = (const char*[]){ "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL } } },
+	{ 0, 				XK_F3,	   spawn,	   {.v = (const char*[]){ "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL } } },
+	{ 0, 				XK_F4,	   spawn,	   {.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
+	{ 0, 				XK_F5,	   spawn,	   {.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -101,9 +117,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ShiftMask,             XK_1,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_2,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_3,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
