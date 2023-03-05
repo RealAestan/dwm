@@ -6,7 +6,6 @@ static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char font[]            = "mono:pixelsize=12:antialias=true:autohint=true";
-static char dmenufont[]       = "mono:pixelsize=12:antialias=true:autohint=true";
 static const char *fonts[]          = { font, "emoji:pixelsize=14:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -58,7 +57,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-c", "-l", "20", "-bw", "2", "-m", dmenumon, NULL };
+static const char *passmenucmd[] = { "passmenu", "--type", "-c", "-l", "20", "-bw", "2", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 /*
@@ -66,8 +66,7 @@ static const char *termcmd[]  = { "st", NULL };
  */
 ResourcePref resources[] = {
 
-    { "font",               STRING,  &font },
-    { "dmenufont",          STRING,  &dmenufont },
+    { "font",                   STRING,  &font },
     { "color0",		        STRING,	 &normbgcolor },
     { "color0",		        STRING,	 &normbordercolor },
     { "color4",		        STRING,	 &normfgcolor },
@@ -85,8 +84,13 @@ ResourcePref resources[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,		XK_grave,  spawn,	   {.v = (const char*[]){ "dmenuunicode", NULL } } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = passmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,		XK_q,	   spawn,	   {.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   {.v = (const char*[]){ "mounter", NULL } } },
+	{ MODKEY|ShiftMask,		XK_u,	   spawn,	   {.v = (const char*[]){ "unmounter", NULL } } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -117,7 +121,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
