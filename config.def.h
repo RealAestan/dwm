@@ -11,7 +11,7 @@ static unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating = 0;     /* 1 means swallow floating windows by default */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char font[]            = "mono:pixelsize=12:antialias=true:autohint=true";
+static char font[]            = "monospace:pixelsize=12:antialias=true:autohint=true";
 static const char *fonts[]          = { font, "emoji:pixelsize=14:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -96,6 +96,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
 	{ MODKEY|ShiftMask,		XK_w,	   spawn,          {.v = (const char*[]){ TERMINAL, "-e", "sudo", "nmtui", NULL } } },
 	{ MODKEY,			XK_m, 	   spawn,	   SHCMD(TERMINAL " -e neomutt") },
+	{ MODKEY,			XK_n, 	   spawn,	   SHCMD(TERMINAL " -e newsraft") },
 	{ MODKEY|ShiftMask,		XK_grave,  spawn,	   {.v = (const char*[]){ "dmenuunicode", NULL } } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = passmenucmd } },
