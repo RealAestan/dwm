@@ -98,6 +98,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_m, 	   spawn,	   SHCMD(TERMINAL " -e neomutt") },
 	{ MODKEY,			XK_n, 	   spawn,	   SHCMD(TERMINAL " -e newsraft") },
 	{ MODKEY|ShiftMask,		XK_grave,  spawn,	   {.v = (const char*[]){ "dmenuunicode", NULL } } },
+	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   {.v = (const char*[]){ "dmenutv", NULL } } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = passmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
